@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './main.dart';
+import '../main.dart';
 import 'package:cached_network_image/cached_network_image.dart'; //To load the images with cache
 
 //Récupérer de la data dans une textbox.

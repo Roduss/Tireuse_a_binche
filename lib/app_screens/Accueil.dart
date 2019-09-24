@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../Socket/game_comm.dart';
 import '../Socket/websockets.dart';
-import './main.dart';
+import '../main.dart';
 
 
 import 'dart:convert';
