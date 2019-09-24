@@ -1,0 +1,4 @@
+com.tits.tireuse_a_binche
+drawable launch_background
+mipmap ic_launcher
+style LaunchTheme

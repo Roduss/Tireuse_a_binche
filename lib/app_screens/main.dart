@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';//To load the images with cache
 
+import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/status.dart' as status; //Pour le websocket apparemment
+
 import './Accueil.dart';
 import './Inscription.dart';
 import './Connexion.dart';
