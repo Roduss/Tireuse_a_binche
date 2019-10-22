@@ -1,132 +1,64 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';//To load the images with cache
 
-import 'package:web_socket_channel/io.dart';
-import 'package:web_socket_channel/status.dart' as status; //Pour le websocket apparemment
 
-import './app_screens/Accueil.dart';
+
 import './app_screens/Inscription.dart';
 import './app_screens/Connexion.dart';
 import './app_screens/Menu_binche.dart';
 import './app_screens/Classement_alcoolo.dart';
 import './app_screens/Taux_voiture.dart';
 
-void main() {
-  runApp(new Accueil());
+
+import 'dart:async';
+import 'package:flutter/foundation.dart';
+import 'dart:io';
+
+
+void main() async {
+  Socket sock = await Socket.connect('192.168.1.24', 80);
+  sock.write("Poco connected !\n");
+
+  runApp(new Connexion(sock));
 }
+//Aussi, quand on atteint une certaine quantité de bière, on coupe l'electrovanne !!!
 
 //stateless : Pour les boutons, stateful : pour les interactions, checkbox et autres.
 
 //Stateful : permet le userinteraction
 
 
-class Accueil extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final appTitle = 'Bienvenue au FAAT club';
-
-    return MaterialApp( //Besoin du materialApp pour faire un home.
-        title: appTitle,
-        theme: ThemeData.dark(),
-        home: Scaffold(
-        appBar: AppBar(
-        title: Text(appTitle),
-        ),
-        body: Accueil_screen()
-    ),
-    );
-  }
-}
 
 
 
 class Connexion extends StatelessWidget {
 
+  Socket socket;
 
+  Connexion(Socket s) { //Constructeur pour prendre en argument la socket.
+    this.socket = s;
+  }
+
+///TODO: Apres 70cl de binche bue, déconnecter.
   @override
   Widget build(BuildContext context) {
-    final appTitle = 'Connexion de chameau';
+
     return MaterialApp(
-        title: appTitle,
-      home: Scaffold(
-        appBar: AppBar(
-          title : Text(appTitle),
-        ),
 
-      body : Connexion_Form(),
-
+      home: Connexion_Form(
+        channel : socket,
       ),
     );
+
   }
 }
 
 
 
-class Inscription extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final appTitle = 'Allez, rejoins nous mon chameau';
-    return MaterialApp(
-        title: appTitle,
-        home: Scaffold(
-      appBar: AppBar(
-        title: Text(appTitle),
-      ),
-      body : Inscription_Form()
-        ),
-    );
-  }
-}
-
-class Menu_binche extends StatelessWidget {
 
 
-  @override
-  Widget build(BuildContext context) {
-    final appTitle = 'Aperooo';
-    return MaterialApp(
-      title: appTitle,
-      home: Scaffold(
-        appBar: AppBar(
-          title : Text(appTitle),
-        ),
-
-        body : Menu_binche_Form()
-      ),
-    );
-  }
-}
 
 
-class Alcoolo_voiture extends StatelessWidget{
-  @override
-  Widget build(BuildContext context) {
-    final appTitle = 'Conduire ou choisir, il faut boire';
-    return MaterialApp(
-      title:  appTitle,
-        home:Scaffold(
-          appBar: AppBar(
-          title : Text(appTitle),
-          ),
-          body : Alcoolo_voiture_Form()
-        ),
-    );
-  }
-}
 
 
-class Classement_alcoolo extends StatelessWidget{
-  @override
-  Widget build(BuildContext context) {
-    final appTitle = 'Regroupement des alcoolos du coins';
-    return MaterialApp(
-      title:  appTitle,
-      home:Scaffold(
-          appBar: AppBar(
-            title : Text(appTitle),
-          ),
-          body : Classement_alcoolo_Form()
-      ),
-    );
-  }
-}
+

@@ -1,4 +1,4 @@
-#Fri Sep 20 23:25:18 CEST 2019
+#Tue Oct 22 17:28:15 CEST 2019
 base.0=D\:\\Beerproject\\build\\app\\intermediates\\transforms\\dexMerger\\debug\\0
 path.0=classes.dex
 renamed.0=classes.dex
