@@ -14,7 +14,6 @@ class Classement_bourre_Form extends StatefulWidget {
   }
 }
 
-
 ///TODO : pour la date, regarder le 4.8 à 14min30 de smartherd
 ///
 ///
@@ -26,8 +25,6 @@ class Classement_bourre_Screen extends State<Classement_bourre_Form> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: classement des 24 dernières heures et de l'année.
-
     if (userList == null) {
       userList = List<Binche_user>();
       updateListView();
@@ -46,7 +43,6 @@ class Classement_bourre_Screen extends State<Classement_bourre_Form> {
     );
   }
 
-
   ListView getListView() {
     TextStyle titleStyle = Theme.of(context).textTheme.subhead;
 
@@ -62,9 +58,9 @@ class Classement_bourre_Screen extends State<Classement_bourre_Form> {
               this.userList[position].name,
               style: titleStyle,
             ),
-            subtitle: Text(this.userList[position].degalc.toString()+" g.L dans le sang"), //Affichage deg alcool
+            subtitle: Text(this.userList[position].degalc.toStringAsFixed(2) +
+                " g.L dans le sang"), //Affichage deg alcool
             leading: Icon(Icons.accessibility_new),
-
           ),
         );
       },
@@ -72,13 +68,13 @@ class Classement_bourre_Screen extends State<Classement_bourre_Form> {
   }
 
   void updateListView() {
-    final Future<Database> dbFuture =
-    databaseHelper.initializeDatabase(); //On ouvre la db -----//Première fonction équivalente au getdatabase.
+    final Future<Database> dbFuture = databaseHelper
+        .initializeDatabase(); //On ouvre la db -----//Première fonction équivalente au getdatabase.
     dbFuture.then((database) {
-      Future<List<Binche_user>> userListFuture =
-      databaseHelper.getdegalcUserList(); //On rechoppe la liste des users - QUANTITE ICI!!!!
+      Future<List<Binche_user>> userListFuture = databaseHelper
+          .getdegalcUserList(); //On rechoppe la liste des users - QUANTITE ICI!!!!
       userListFuture.then((userList) {
-        setState(() { ///================Permet de faire l'update du screen=============
+        setState(() {
           this.userList = userList; //On envoie la nouvelle userList a la db !
           this.count = userList.length; //et sa nouvelle longueur
         });
@@ -89,7 +85,4 @@ class Classement_bourre_Screen extends State<Classement_bourre_Form> {
   void moveToLastScreen() {
     Navigator.pop(context, true);
   }
-
-
-
 }

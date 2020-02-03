@@ -16,7 +16,7 @@ import 'dart:io';
 
 
 void main() async {
-  Socket sock = await Socket.connect('192.168.1.24', 80);
+  Socket sock = await Socket.connect('192.168.1.220', 80);
   sock.write("Poco connected !\n");
 
   runApp(new Connexion(sock));
@@ -39,7 +39,6 @@ class Connexion extends StatelessWidget {
     this.socket = s;
   }
 
-///TODO: Apres 70cl de binche bue, déconnecter.
   @override
   Widget build(BuildContext context) {
 
@@ -52,10 +51,6 @@ class Connexion extends StatelessWidget {
 
   }
 }
-
-
-
-
 
 
 

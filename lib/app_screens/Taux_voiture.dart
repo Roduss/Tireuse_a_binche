@@ -9,7 +9,7 @@ class Alcoolo_voiture_Form extends StatefulWidget {
 }
 
 class Alcoolo_voiture_Screen extends State<Alcoolo_voiture_Form> {
-  //String nb_binche="", deg_alc="", poids="";
+
   TextEditingController NbbincheControlled = TextEditingController();
   TextEditingController DegalcControlled = TextEditingController();
   TextEditingController PoidsControlled = TextEditingController();

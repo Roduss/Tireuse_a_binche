@@ -5,9 +5,6 @@ import '../models/binche_user_data.dart';
 import '../utils/database_helper.dart';
 import 'package:intl/intl.dart';
 
-
-
-
 class Inscription_Form extends StatefulWidget {
   final Binche_user binche_user;
   final String appTitle;
@@ -59,7 +56,8 @@ class Inscription_screen extends State<Inscription_Form> {
               style: textStyle,
               onChanged: (value) {
                 updateName(); //Permet d'envoyer à la bdd après
-                debugPrint('Something changed in Title Text Field, le name :' + binche_user.name );
+                debugPrint('Something changed in Title Text Field, le name :' +
+                    binche_user.name);
               },
               decoration: InputDecoration(
                   labelText: "Entre ton nom, chameau",
@@ -84,7 +82,6 @@ class Inscription_screen extends State<Inscription_Form> {
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0))),
             ),
-
 
 //Bouton send :
             Padding(
@@ -138,10 +135,8 @@ class Inscription_screen extends State<Inscription_Form> {
     }
 
     if (result != 0) {
-      //Sucess
       _showAlertDialog('Status', 'Ton nom est sauvé, chamoo');
     } else {
-      //Pas sucess
       _showAlertDialog('Status', 'Problem Saving you, chamo');
     }
   }
@@ -154,49 +149,3 @@ class Inscription_screen extends State<Inscription_Form> {
     showDialog(context: context, builder: (_) => alertDialog);
   }
 }
-
-/* final _formKey = GlobalKey<FormState>();
-    String username;
-    Form(
-      key: _formKey,
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            //====Textbox username et profil==========
-            TextFormField(
-              autofocus: true,
-              decoration: InputDecoration(labelText: 'Enter username'),
-              validator: (value) {
-                if (value.isEmpty) {
-                  return 'Please enter some text';
-                }
-
-                return null;
-              },
-              onSaved: (value) {
-                username = value;
-              },
-            ),
-    ),
-
-            //===============Bouton submit=======
-
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: RaisedButton(
-                onPressed: () {
-                  if (_formKey.currentState.validate()) {
-                    Scaffold.of((context)).showSnackBar(SnackBar(
-                        content: Text('ça process'))); //Comprendre le scaffold
-                    _formKey.currentState.save();
-                    Scaffold.of(context).showSnackBar(SnackBar(
-                        content: Text(
-                            '$username '))); //Juste pour etre serein sur la sauvegarde de variables.
-                  }
-                },
-                child: Text('Créer le compte du nouveau chameau'),
-              ),
-            )
-          ]),
-*/
-// child: Text('Creation'),

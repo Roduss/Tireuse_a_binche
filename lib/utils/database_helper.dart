@@ -57,7 +57,7 @@ class DatabaseHelper{
   void _createDb(Database db, int newVersion) async{
 
     await db.execute('CREATE TABLE $userDataTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colname TEXT,'
-      '$colqtebinche INTEGER,$colpoids DOUBLE, $coldegalc DOUBLE )');
+      '$colqtebinche DOUBLE,$colpoids DOUBLE, $coldegalc DOUBLE )');
   }
 
 
@@ -117,6 +117,17 @@ Future<List<Map<String, dynamic>>> getUserMapList() async { //Il faudra ensuite 
     List<Map<String, dynamic>> x= await db.rawQuery('SELECT COUNT (*) from $userDataTable');
     int result = Sqflite.firstIntValue(x);
     return result;
+  }
+
+  //Reset Db:
+
+  Future<int> resetQuantBue() async {
+
+    Database db = await this.database;
+
+    var result = await db.rawUpdate('UPDATE $userDataTable SET $colqtebinche = 0, $coldegalc=0 ');
+
+   return result;
   }
 
 

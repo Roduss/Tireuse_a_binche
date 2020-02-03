@@ -5,7 +5,7 @@ class Binche_user{
 
   int _id;
   String _name;
-  int _qtebinche;
+  double _qtebinche;
   double _poids;
   double _degalc;
 
@@ -21,7 +21,7 @@ class Binche_user{
 
   String get name => _name;
 
-  int get qtebinche => _qtebinche;
+  double get qtebinche => _qtebinche;
 
   double get poids => _poids;
 
@@ -36,7 +36,7 @@ class Binche_user{
     }
   }
 
-  set qtebinche(int newqte){
+  set qtebinche(double newqte){
     this._qtebinche=newqte;
   }
 

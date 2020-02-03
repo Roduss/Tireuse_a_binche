@@ -15,9 +15,6 @@ class Classement_alcoolo_Form extends StatefulWidget {
 }
 
 
-///TODO : pour la date, regarder le 4.8 à 14min30 de smartherd
-///
-///
 class Classement_alcoolo_Screen extends State<Classement_alcoolo_Form> {
   final appTitle = 'Regroupement des alcoolos du coins';
   DatabaseHelper databaseHelper = DatabaseHelper();
@@ -26,7 +23,7 @@ class Classement_alcoolo_Screen extends State<Classement_alcoolo_Form> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: classement des 24 dernières heures et de l'année.
+
 
     if (userList == null) {
       userList = List<Binche_user>();
@@ -46,11 +43,6 @@ class Classement_alcoolo_Screen extends State<Classement_alcoolo_Form> {
     );
   }
 
-///Il faut reregarder le smartherd pour passer des datas entre screen.
-  ///Quand tu arriveras à les afficher, il reste plus qu'a get la list dans le bon ordre, regarde dans
-  ///le database helper, j'ai défini les 2 fct, autant faire 2 pages du coup.
-  ///A voir s'il faut faire un 2 eme bouton dans le menu binche.
-  ///bisouus
   ListView getListView() {
     TextStyle titleStyle = Theme.of(context).textTheme.subhead;
 
@@ -66,23 +58,24 @@ class Classement_alcoolo_Screen extends State<Classement_alcoolo_Form> {
               this.userList[position].name,
               style: titleStyle,
             ),
-            subtitle: Text(this.userList[position].degalc.toString()+" Litres bus"), //Affichage deg alcool
+            subtitle: Text(
+                this.userList[position].qtebinche.toStringAsFixed(0) +
+                    " cl bus"), //Affichage deg alcool
             leading: Icon(Icons.accessibility_new),
-
-        ),
+          ),
         );
       },
     );
   }
 
   void updateListView() {
-    final Future<Database> dbFuture =
-        databaseHelper.initializeDatabase(); //On ouvre la db -----//Première fonction équivalente au getdatabase.
+    final Future<Database> dbFuture = databaseHelper
+        .initializeDatabase(); //On ouvre la db -----//Première fonction équivalente au getdatabase.
     dbFuture.then((database) {
-      Future<List<Binche_user>> userListFuture =
-          databaseHelper.getqteUserList(); //On rechoppe la liste des users - QUANTITE ICI!!!!
+      Future<List<Binche_user>> userListFuture = databaseHelper
+          .getqteUserList(); //On rechoppe la liste des users - QUANTITE ICI!!!!
       userListFuture.then((userList) {
-        setState(() { ///================Permet de faire l'update du screen=============
+        setState(() {
           this.userList = userList; //On envoie la nouvelle userList a la db !
           this.count = userList.length; //et sa nouvelle longueur
         });
@@ -93,5 +86,4 @@ class Classement_alcoolo_Screen extends State<Classement_alcoolo_Form> {
   void moveToLastScreen() {
     Navigator.pop(context, true);
   }
-
 }

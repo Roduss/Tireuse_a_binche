@@ -1,56 +1,57 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:tireuse_a_binche/models/binche_user_data.dart';
-
+import 'dart:convert';
 
 import '../models/binche_user_data.dart';
 import '../utils/database_helper.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flutter/foundation.dart';
 import 'dart:io';
 
-
-
-
-
 class Settings_Form extends StatefulWidget {
   final Socket channel;
 
-  Settings_Form({Key key, this.channel}) : super(key:key);
+  Settings_Form({Key key, this.channel}) : super(key: key);
 
   @override
   Settings_Screen createState() => Settings_Screen();
-
-  /*State<StatefulWidget> createState() {
-    return Settings_Screen();
-  }*/
 }
+/*class Jsonval { //Json objects pour envoi plus simple
+  final String deg_alc;
+  final String contenance;
 
-class Settings_Screen extends State<Settings_Form>{
+  Jsonval(this.deg_alc, this.contenance);
+
+  Jsonval.fromMappedJson(Map<String, dynamic> json)
+      : deg_alc = json['deg_alc'],
+        contenance = json['contenance'];
+
+  Map<String, dynamic> toJson() =>
+      {
+        'deg_alc': deg_alc,
+        'contenance': contenance,
+      };
+}
+*/
+
+class Settings_Screen extends State<Settings_Form> {
   DatabaseHelper helper = DatabaseHelper();
-  
+
   TextEditingController tauxalc = TextEditingController();
   TextEditingController taillefut = TextEditingController();
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  /*============================La fonction dispose s'éxécute quand on quitte l'écran, on en veut pas du coup !!!
-  @override
-  void dispose(){
-    widget.channel.write("Nous allons fermer le channel ... \n");
-    widget.channel.close();
-    super.dispose();
-  }*/
-  
   @override
   Widget build(BuildContext context) {
     TextStyle textStyle = Theme.of(context).textTheme.title;
 
     final appTitle = 'Paramétrage tireuse';
-    
-    
-    
+
     return Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           title: Text(appTitle),
           leading: IconButton(
@@ -60,38 +61,29 @@ class Settings_Screen extends State<Settings_Form>{
                 moveToLastScreen();
               }),
         ),
-        body:Padding( 
+        body: Padding(
           padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
           child: ListView(
             children: <Widget>[
               TextField(
                 controller: tauxalc,
                 style: textStyle,
-                /*onChanged: (value){
-                  _sendvalue(double.parse(tauxalc.text); // On convertit en double comme ça c'est le bon format normalement.
-                },*/
                 decoration: InputDecoration(
                     labelText: "Degré d'alcool du fut",
                     labelStyle: textStyle,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0))),
               ),
-              
               SizedBox(height: 50),
-              
               TextField(
                 controller: taillefut,
                 style: textStyle,
-                /*onChanged: (value){
-                  _sendvalue(double.parse(taillefut.text)); //
-                },*/
                 decoration: InputDecoration(
                     labelText: "Contenance du fut",
                     labelStyle: textStyle,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0))),
               ),
-              
               RaisedButton(
                 color: Theme.of(context).primaryColorDark,
                 textColor: Theme.of(context).primaryColorLight,
@@ -99,70 +91,77 @@ class Settings_Screen extends State<Settings_Form>{
                   'Envoi',
                   textScaleFactor: 1.5,
                 ),
-                onPressed: _showDialog ,
-                  /*setState(() {
-                    _sendvalue(double.parse(tauxalc.text), double.parse(taillefut.text));
-                  });*/
-
+                onPressed: () =>
+                    _showDialog(context, tauxalc.text, taillefut.text),
               ),
-              /*StreamBuilder(
-                stream: widget.channel,
-                builder: (context, snapshot) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 24.0),
-                    child: Text(snapshot.hasData
-                        ? '${String.fromCharCodes(snapshot.data)}'
-                        : 'rien'),
-                  );
-                },
-              )*/
             ],
           ),
-        )
-
-    );
+        ));
   }
 
+  _save_contenance(double mydeg_alc, double mycontenance) async {
+    final prefs = await SharedPreferences.getInstance();
+    final key = 'my_contenance_key';
+    final key1 = 'my_deg_alc_key';
+    final key2 = 'my_real_contenance_key';
 
-  void _sendvalue(){
-    
-    //TODO : Ajouter une vérif pour pas que les valeurs soient folles
-
-     widget.channel.write("Apero\n");
-    
+    if (mydeg_alc > 0 &&
+        mydeg_alc < 50 &&
+        mycontenance > 0 &&
+        mycontenance < 30) {
+      prefs.setDouble(key, 0);
+      prefs.setDouble(key1, mydeg_alc);
+      prefs.setDouble(key2, mycontenance);
+      print('binche bue remise à zéro maggle.');
+    } else {
+      showSnackBar(context, "Mauvaises val dukon, explosion tireuse !");
+    }
   }
 
-  Future <void>  _showDialog(){
-
+  Future<void> _showDialog(
+      BuildContext context, String deg_alc, String contenance) {
     return showDialog<void>(
-        context : context,
-        builder: (BuildContext context){
+        context: context,
+        builder: (BuildContext context) {
           return AlertDialog(
             title: new Text("Envoyer ?"),
-            content: new Text("C'est les bonnes valeurs hein ? Sinon ça fout la merde"),
+            content: new Text(
+                "C'est les bonnes valeurs hein ? Sinon ça fout la merde - Utiliser un . pour nb décimaux !!!"),
             actions: <Widget>[
               FlatButton(
-                child : Text("Oui"),
-                onPressed: (){
-                  _sendvalue();
+                child: Text("Oui"),
+                onPressed: () {
+                  //_sendvalue(context, deg_alc, contenance);
+                  _save_contenance(
+                      double.parse(deg_alc), double.parse(contenance));
                   Navigator.of(context).pop();
                 },
-
               ),
               FlatButton(
                 child: Text("Non"),
-                onPressed: (){
+                onPressed: () {
                   Navigator.of(context).pop();
                 },
               )
             ],
           );
-        }
-    );
-
+        });
   }
 
+  void showSnackBar(BuildContext context, String message) {
+    var snackBar = SnackBar(
+      content: Text(message),
+      action: SnackBarAction(
+        label: "J'explose aussi",
+        onPressed: () {
+          //Remettre l'user dans le game, a voir si on garde. Ou si on supprimer vraiment comme ça.
+        },
+      ),
+    );
+    _scaffoldKey.currentState.showSnackBar(snackBar);
 
+    ///TODO : vérifier que ça fonctionne, sinon changer comme dans connexion.dart.
+  }
 
   void moveToLastScreen() {
     Navigator.pop(context, true);
