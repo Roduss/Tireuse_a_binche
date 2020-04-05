@@ -121,13 +121,22 @@ Future<List<Map<String, dynamic>>> getUserMapList() async { //Il faudra ensuite 
 
   //Reset Db:
 
-  Future<int> resetQuantBue() async {
+  Future<bool> resetQuantBue() async {
 
     Database db = await this.database;
 
-    var result = await db.rawUpdate('UPDATE $userDataTable SET $colqtebinche = 0, $coldegalc=0 ');
+    try {
+      await db.rawUpdate(
+          'UPDATE $userDataTable SET $colqtebinche = 0, $coldegalc=0 '
+      );
+      return true;
+    } catch (e) {
+      print(e);
+          return false;
+    }
 
-   return result;
+
+
   }
 
 

@@ -153,18 +153,20 @@ class Connexion_screen extends State<Connexion_Form> {
 
   void Resetbdd(double heurelastbinche) async {
     var now = _timeOfDayToDouble(TimeOfDay.now());
-    int result;
+    bool result;
     print("On a heurelastbinche = $heurelastbinche et now : $now \n");
     print(
         "LE résultat de la soustraction des heures est : ${now - heurelastbinche}\n");
-    if (now - heurelastbinche > 0.2 && heurelastbinche != 0 || now - heurelastbinche <0 && heurelastbinche != 0) {
+    if (now - heurelastbinche > 0.02 && heurelastbinche != 0 || now - heurelastbinche <0 && heurelastbinche != 0) {
 
 
       result = await databaseHelper.resetQuantBue();
-      if (result == 1) {
+      if (result == true) {
         print("Sucess pour remettre alcool a 0");
+        updateListView();
       } else {
         print("Error updating db :(");
+        print(result);
       }
     }
   }

@@ -94,6 +94,16 @@ class Settings_Screen extends State<Settings_Form> {
                 onPressed: () =>
                     _showDialog(context, tauxalc.text, taillefut.text),
               ),
+              RaisedButton(
+                color: Theme.of(context).primaryColorDark,
+                textColor: Theme.of(context).primaryColorLight,
+                child: Text(
+                  '!Reset BDD!',
+                  textScaleFactor: 1.5,
+                ),
+                onPressed: () =>
+                _showmyDialog(context),
+              ),
             ],
           ),
         ));
@@ -148,6 +158,37 @@ class Settings_Screen extends State<Settings_Form> {
         });
   }
 
+
+  Future<void> _showmyDialog(BuildContext context) {
+    return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: new Text("Reset?"),
+            content: new Text(
+                "Fais gaffe, ça va casser la soirasse"),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("Oui"),
+                onPressed: () {
+                  Resetbdd();
+                  Navigator.of(context).pop();
+                },
+              ),
+              FlatButton(
+                child: Text("Non"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        });
+
+
+  }
+
+
   void showSnackBar(BuildContext context, String message) {
     var snackBar = SnackBar(
       content: Text(message),
@@ -166,4 +207,15 @@ class Settings_Screen extends State<Settings_Form> {
   void moveToLastScreen() {
     Navigator.pop(context, true);
   }
-}
+  void Resetbdd() async {
+    bool result;
+      result = await helper.resetQuantBue();
+      if (result == true) {
+        print("Sucess pour remettre alcool a 0");
+      } else {
+        print("Error updating db :(");
+        print(result);
+      }
+    }
+  }
+
