@@ -3,20 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:tireuse_a_binche/app_screens/Classement_alcoolo.dart';
 import 'package:tireuse_a_binche/app_screens/Classement_bourre.dart';
 import 'package:tireuse_a_binche/models/binche_user_data.dart';
-import '../main.dart';
-import 'package:cached_network_image/cached_network_image.dart'; //To load the images with cache
+
+
 import '../models/binche_user_data.dart';
 import '../utils/database_helper.dart';
 import './Taux_voiture.dart';
-import '../models/binche_user_data.dart';
-import '../utils/database_helper.dart';
+
 import 'package:sqflite/sqflite.dart';
-import './Connexion.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flutter/foundation.dart';
 import 'dart:io';
-import '../GolbalValues.dart';
+
 
 //Finir par ce lien : https://flutter.dev/docs/deployment/android
 
@@ -127,7 +126,7 @@ class Menu_binche_screen extends State<Menu_binche_Form> {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle textStyle = Theme.of(context).textTheme.title;
+    TextStyle textStyle = Theme.of(context).textTheme.headline6;
 
     pompespourfit.text = Calcfit().toString();
     grasgagne.text = Calcgras();

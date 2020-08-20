@@ -1,17 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';//To load the images with cache
 
-
-
-import './app_screens/Inscription.dart';
 import './app_screens/Connexion.dart';
-import './app_screens/Menu_binche.dart';
-import './app_screens/Classement_alcoolo.dart';
-import './app_screens/Taux_voiture.dart';
 
-
-import 'dart:async';
-import 'package:flutter/foundation.dart';
 import 'dart:io';
 
 
@@ -19,15 +9,13 @@ void main() async {
   Socket sock = await Socket.connect('192.168.1.220', 80);
   sock.write("Poco connected !\n");
 
-  runApp(new Connexion(sock));
+  runApp(new Connexion(sock)); //ça tu vas le changer du coup
 }
-//Aussi, quand on atteint une certaine quantité de bière, on coupe l'electrovanne !!!
-
-//stateless : Pour les boutons, stateful : pour les interactions, checkbox et autres.
-
-//Stateful : permet le userinteraction
 
 
+///TODO : Ajouter écran de connexion avec une textfield pour entrer l'adresse internet du bail
+///Avec genre un timeout au cas ou ça foire, mais qui donne les infos limite.
+///Mettre un bouton de déconnexion aussi sur la page des users.
 
 
 
@@ -43,7 +31,7 @@ class Connexion extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return MaterialApp(
-
+  ///Il faudra donc passer cette channel sur les autres pages et ajouter notre page.
       home: Connexion_Form(
         channel : socket,
       ),

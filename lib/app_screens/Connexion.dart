@@ -5,10 +5,10 @@ import 'package:tireuse_a_binche/app_screens/Inscription.dart';
 import 'package:tireuse_a_binche/app_screens/Menu_binche.dart';
 import '../models/binche_user_data.dart';
 import '../utils/database_helper.dart';
-import '../main.dart';
+
 import 'package:sqflite/sqflite.dart';
 import './Settings.dart';
-import '../GolbalValues.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flutter/foundation.dart';
@@ -106,7 +106,7 @@ class Connexion_screen extends State<Connexion_Form> {
   }
 
   ListView getListView() {
-    TextStyle titleStyle = Theme.of(context).textTheme.subhead;
+    TextStyle titleStyle = Theme.of(context).textTheme.subtitle1;
 
     return ListView.builder(
       itemCount: count,

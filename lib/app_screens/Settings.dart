@@ -1,9 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:tireuse_a_binche/models/binche_user_data.dart';
-import 'dart:convert';
 
-import '../models/binche_user_data.dart';
 import '../utils/database_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -46,7 +43,7 @@ class Settings_Screen extends State<Settings_Form> {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle textStyle = Theme.of(context).textTheme.title;
+    TextStyle textStyle = Theme.of(context).textTheme.headline6;
 
     final appTitle = 'Paramétrage tireuse';
 

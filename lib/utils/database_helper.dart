@@ -1,5 +1,3 @@
-import 'dart:async' as prefix0;
-
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 import 'dart:io';

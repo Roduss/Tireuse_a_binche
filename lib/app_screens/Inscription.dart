@@ -1,9 +1,9 @@
-import 'dart:async';
+
 import 'package:flutter/material.dart';
-import '../main.dart';
+
 import '../models/binche_user_data.dart';
 import '../utils/database_helper.dart';
-import 'package:intl/intl.dart';
+
 
 class Inscription_Form extends StatefulWidget {
   final Binche_user binche_user;
@@ -30,7 +30,7 @@ class Inscription_screen extends State<Inscription_Form> {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle textStyle = Theme.of(context).textTheme.title;
+    TextStyle textStyle = Theme.of(context).textTheme.subtitle1;
 
     usrnamecontroller.text = binche_user.name;
     usrpoidscontroller.text = binche_user.poids.toString();

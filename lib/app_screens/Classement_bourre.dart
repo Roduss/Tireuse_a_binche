@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:tireuse_a_binche/models/binche_user_data.dart';
-import '../main.dart';
+
 
 import '../models/binche_user_data.dart';
 import '../utils/database_helper.dart';
@@ -44,7 +44,7 @@ class Classement_bourre_Screen extends State<Classement_bourre_Form> {
   }
 
   ListView getListView() {
-    TextStyle titleStyle = Theme.of(context).textTheme.subhead;
+    TextStyle titleStyle = Theme.of(context).textTheme.subtitle1;
 
     return ListView.builder(
       itemCount: count, //Récupère le nb d'users
